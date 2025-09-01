@@ -1,1 +1,1 @@
-링크:https://github.com/HYEONSERIC/CJT_CALLBUS/
+링크:https://hyeonseric.github.io/CJT_CALLBUS/
