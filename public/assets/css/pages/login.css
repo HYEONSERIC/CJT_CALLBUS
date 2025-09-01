@@ -1,0 +1,79 @@
+.topbar {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 14px 16px;
+    text-align: center;
+}
+
+.topbar__title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.container {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 0 16px;
+    text-align: center;
+}
+
+.lead {
+    color: #555;
+    line-height: 1.6;
+    margin: 12px 0 20px;
+}
+
+/* 로그인 버튼들 */
+.role-list {
+    display: grid;
+    gap: 12px;
+    margin: 0 auto 28px;
+}
+
+.role {
+    display: block;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 16px 18px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.role:hover {
+    border-color: #bbb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.role--primary {
+    background: #f6c514; /* 노랑 */
+    border-color: #e1b70f;
+    color: #111;
+}
+
+/* 회원가입 링크 */
+.signup {
+    display: grid;
+    gap: 10px;
+    place-items: center;
+    color: #666;
+}
+
+.btn-outline {
+    display: inline-block;
+    padding: 10px 16px;
+    border: 1.5px solid #1976d2;
+    color: #1976d2;
+    text-decoration: none;
+    border-radius: 999px;
+    font-weight: 600;
+}
+
+.btn-outline:hover {
+    background: rgba(25, 118, 210, 0.06);
+}
