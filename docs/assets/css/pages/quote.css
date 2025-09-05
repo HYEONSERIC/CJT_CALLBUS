@@ -1,0 +1,77 @@
+/* 노란 히어로 */
+.quote-hero {
+    background: linear-gradient(180deg, var(--brand) 0%, #ffd84d 100%);
+    padding: 48px 0 32px;
+}
+
+/* 소제목 */
+.quote-subtitle {
+    font-size: 24px;
+    font-weight: 900;
+    color: #1f2937;
+    margin: 28px 0 16px;
+}
+
+/* 세그먼트 (개인/법인/여행사) */
+.seg {
+    display: inline-flex;
+    gap: 4px;
+    padding: 4px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+.seg__btn {
+    border: 0;
+    background: transparent;
+    padding: 10px 18px;
+    border-radius: 12px;
+    font-weight: 800;
+    color: #334155;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+.seg__btn.is-active {
+    background: #111827;
+    color: #fff;
+}
+
+/* 목적 선택 칩 */
+.pill-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+@media (max-width: 640px) {
+    .pill-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pill {
+    width: 100%;
+    border: 0;
+    cursor: pointer;
+    padding: 14px 16px;
+    border-radius: 14px;
+    font-weight: 800;
+    background: #fff;
+    color: #111827;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: 0.15s ease;
+}
+.pill:hover {
+    transform: translateY(-1px);
+}
+.pill.is-active {
+    background: #111827;
+    color: #fff;
+}
+
+/* 폼은 기존 카드 스타일 유지 */
+#quoteForm {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    padding: 20px;
+}

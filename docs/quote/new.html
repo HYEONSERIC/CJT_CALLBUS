@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>가격비교 요청 | CALLBUS</title>
+
+        <!-- 전역/컴포넌트/페이지 전용 CSS -->
+        <link rel="stylesheet" href="../assets/css/base.css" />
+        <link rel="stylesheet" href="../assets/css/components.css" />
+        <link rel="stylesheet" href="../assets/css/pages/quote.css" />
+    </head>
+
+    <body>
+        <!-- 노란 히어로 영역 -->
+        <section class="quote-hero">
+            <div class="container" style="max-width: 960px; padding: 32px 20px">
+                <h1 class="hero__title">가격비교 요청</h1>
+
+                <!-- 고객 유형 세그먼트 -->
+                <div
+                    class="seg"
+                    role="tablist"
+                    aria-label="고객 유형"
+                    style="margin-top: 8px"
+                >
+                    <button
+                        class="seg__btn is-active"
+                        data-value="personal"
+                        role="tab"
+                        aria-selected="true"
+                    >
+                        개인
+                    </button>
+                    <button
+                        class="seg__btn"
+                        data-value="corporate"
+                        role="tab"
+                        aria-selected="false"
+                    >
+                        법인
+                    </button>
+                    <button
+                        class="seg__btn"
+                        data-value="agency"
+                        role="tab"
+                        aria-selected="false"
+                    >
+                        여행사
+                    </button>
+                </div>
+
+                <!-- 목적 선택 -->
+                <h2 class="quote-subtitle">어떤 목적으로 이용하시나요?</h2>
+                <ul
+                    class="pill-grid"
+                    id="purposeGrid"
+                    style="margin-bottom: 20px"
+                >
+                    <li>
+                        <button
+                            class="pill is-active"
+                            data-value="wedding_guests"
+                        >
+                            결혼식 하객버스
+                        </button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="corporate_workshop">
+                            기업행사/워크샵
+                        </button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="wedding_car">
+                            웨딩카
+                        </button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="commute_regular">
+                            통근버스 정기운행
+                        </button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="group_trip">
+                            단체여행
+                        </button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="school_mt">
+                            학교 행사/MT
+                        </button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="field_study">
+                            현장학습
+                        </button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="club">동호회</button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="concert_festival">
+                            콘서트/페스티벌
+                        </button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="golf">골프모임</button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="hiking">산악회</button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="religion">
+                            종교행사
+                        </button>
+                    </li>
+                    <li>
+                        <button class="pill" data-value="airport">
+                            공항이용
+                        </button>
+                    </li>
+                    <li><button class="pill" data-value="etc">기타</button></li>
+                </ul>
+
+                <!-- 입력 폼 카드 -->
+                <main
+                    class="container"
+                    style="max-width: 720px; padding: 0 0 24px"
+                >
+                    <form
+                        id="quoteForm"
+                        class="card"
+                        style="
+                            padding: 20px;
+                            border-radius: 16px;
+                            background: #fff;
+                            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                        "
+                    >
+                        <!-- 숨김값: 세그먼트/목적 -->
+                        <input
+                            type="hidden"
+                            name="customerType"
+                            id="customerType"
+                            value="personal"
+                        />
+                        <input
+                            type="hidden"
+                            name="purpose"
+                            id="purpose"
+                            value="wedding_guests"
+                        />
+
+                        <div style="display: grid; gap: 14px">
+                            <label
+                                >출발지
+                                <input
+                                    name="from"
+                                    required
+                                    placeholder="예: 서울역"
+                                />
+                            </label>
+
+                            <label
+                                >도착지
+                                <input
+                                    name="to"
+                                    required
+                                    placeholder="예: 인천공항"
+                                />
+                            </label>
+
+                            <label
+                                >날짜/시간
+                                <input
+                                    type="datetime-local"
+                                    name="when"
+                                    required
+                                />
+                            </label>
+
+                            <label
+                                >인원
+                                <input
+                                    type="number"
+                                    name="people"
+                                    min="1"
+                                    value="20"
+                                    required
+                                />
+                            </label>
+
+                            <fieldset
+                                style="border: 0; padding: 0; margin-top: 6px"
+                            >
+                                <legend
+                                    style="font-weight: 700; margin-bottom: 6px"
+                                >
+                                    차종
+                                </legend>
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="busType"
+                                        value="large"
+                                    />
+                                    대형(45인)</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="busType"
+                                        value="mid"
+                                    />
+                                    중형(28인)</label
+                                >
+                                <label
+                                    ><input
+                                        type="radio"
+                                        name="busType"
+                                        value="small"
+                                    />
+                                    소형/밴(18인)</label
+                                >
+                            </fieldset>
+
+                            <button class="btn btn--primary" type="submit">
+                                가격비교 보기
+                            </button>
+                        </div>
+                    </form>
+
+                    <p style="margin-top: 14px">
+                        <a href="../index.html">← 홈으로</a>
+                    </p>
+                </main>
+            </div>
+        </section>
+
+        <!-- 동작 스크립트 -->
+        <script>
+            // ?type=large 등 초기 라디오 반영
+            const initType = new URLSearchParams(location.search).get('type');
+            if (initType) {
+                const r = document.querySelector(
+                    `input[name="busType"][value="${initType}"]`
+                );
+                if (r) r.checked = true;
+            }
+
+            // 세그먼트(개인/법인/여행사)
+            const segBtns = document.querySelectorAll('.seg__btn');
+            const customerType = document.getElementById('customerType');
+            segBtns.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    segBtns.forEach((b) => {
+                        b.classList.remove('is-active');
+                        b.setAttribute('aria-selected', 'false');
+                    });
+                    btn.classList.add('is-active');
+                    btn.setAttribute('aria-selected', 'true');
+                    customerType.value = btn.dataset.value;
+                });
+            });
+
+            // 목적 칩 (단일 선택)
+            const purposeGrid = document.getElementById('purposeGrid');
+            const purposeInput = document.getElementById('purpose');
+            purposeGrid.addEventListener('click', (e) => {
+                const t = e.target.closest('.pill');
+                if (!t) return;
+                purposeGrid
+                    .querySelectorAll('.pill')
+                    .forEach((p) => p.classList.remove('is-active'));
+                t.classList.add('is-active');
+                purposeInput.value = t.dataset.value;
+            });
+
+            // 제출 → result.html 로 파라미터 전달
+            document
+                .getElementById('quoteForm')
+                .addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const data = new FormData(e.target);
+                    const qs = new URLSearchParams(data).toString();
+                    location.href = `./result.html?${qs}`;
+                });
+        </script>
+    </body>
+</html>
