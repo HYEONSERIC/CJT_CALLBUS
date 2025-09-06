@@ -47,6 +47,8 @@
 .btn--primary {
     background: var(--blue);
     color: #fff;
+    padding: 2% 32px;
+    margin: auto;
     box-shadow: 0 6px 14px rgba(45, 108, 223, 0.25);
 }
 .btn--primary:hover {
@@ -116,9 +118,10 @@
 
 /* 타이틀 공통 */
 .hero__title {
-    font-size: 36px;
-    font-weight: 900;
+    font-size: 20px;
+    font-weight: 800;
     margin: 12px 0 24px;
+    font-family: 'Apple SD Gothic Neo', sans-serif;
 }
 .eyebrow {
     color: #6b4f00;
