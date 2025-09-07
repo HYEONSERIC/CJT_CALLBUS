@@ -121,7 +121,11 @@ body {
     background: #fff; /* 인풋은 선명하게 */
     font-size: 14px;
 }
-
+@media (max-width: 639px) {
+    .pill-grid {
+        grid-template-columns: repeat(2, 1fr);
+    } /* 모바일: 2열 */
+}
 /* 버튼 */
 #quoteForm .btn {
     padding: 14px;
