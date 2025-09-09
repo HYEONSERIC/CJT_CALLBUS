@@ -7,10 +7,12 @@ body {
 }
 /* 노란 히어로 */
 .quote-hero {
-    background: linear-gradient(180deg, var(--brand) 0%, #ffd84d 100%);
+    background: linear-gradient(180deg, var(--brand) 0%, #ffb347 100%);
     padding: 48px 0 32px;
     overflow: auto;
     text-align: center;
+    margin: 0;
+    min-height: 100vh;
 }
 
 /* 소제목 */

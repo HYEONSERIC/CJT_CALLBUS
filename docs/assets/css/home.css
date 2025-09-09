@@ -1,5 +1,5 @@
 :root {
-    --brand: #f6c514;
+    --brand: #ffb347;
     --text: #222;
     --card: #fff;
 }
@@ -10,7 +10,7 @@
 
 body {
     margin: 0;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     color: var(--text);
     background: var(--brand);
 }

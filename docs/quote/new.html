@@ -122,81 +122,31 @@
                     <li><button class="pill" data-value="etc">기타</button></li>
                 </ul>
 
-                <!-- 입력 폼 카드 -->
-                <main
-                    class="container"
-                    style="max-width: 300px; padding: 0 0 24px"
+                <!-- ✅ 현재 선택을 담아둘 숨김값 -->
+                <input type="hidden" id="customerType" value="personal" />
+                <input type="hidden" id="purpose" value="wedding_guests" />
+
+                <!-- ✅ 다음 단계 버튼 -->
+                <div
+                    style="
+                        margin-top: 16px;
+                        display: flex;
+                        flex-direction: column; /* 세로 정렬 */
+                        align-items: center; /* 가운데 정렬 */
+                        gap: 10px; /* 버튼-링크 간격 */
+                    "
                 >
-                    <form id="quoteForm">
-                        <!-- 숨김값: 세그먼트/목적 -->
-                        <input
-                            type="hidden"
-                            name="customerType"
-                            id="customerType"
-                            value="personal"
-                        />
-                        <input
-                            type="hidden"
-                            name="purpose"
-                            id="purpose"
-                            value="wedding_guests"
-                        />
-
-                        <div style="display: grid; gap: 14px">
-                            <label
-                                >출발지
-                                <input
-                                    name="from"
-                                    required
-                                    placeholder="예: 서울역"
-                                />
-                            </label>
-
-                            <label
-                                >도착지
-                                <input
-                                    name="to"
-                                    required
-                                    placeholder="예: 인천공항"
-                                />
-                            </label>
-
-                            <label
-                                >날짜/시간
-                                <input
-                                    type="datetime-local"
-                                    name="when"
-                                    required
-                                />
-                            </label>
-
-                            <label
-                                >인원
-                                <input
-                                    type="number"
-                                    name="people"
-                                    min="1"
-                                    value="20"
-                                    required
-                                />
-                            </label>
-
-                            <button class="btn btn--primary" type="submit">
-                                가격비교 보기
-                            </button>
-                        </div>
-                    </form>
-
-                    <p style="margin-top: 14px">
-                        <a href="../index.html">← 홈으로</a>
-                    </p>
-                </main>
+                    <button id="goDate" type="button" class="btn btn-primary">
+                        날짜 선택하러 가기 →
+                    </button>
+                    <a href="../index.html">← 홈으로</a>
+                </div>
             </div>
         </section>
 
         <!-- 동작 스크립트 -->
         <script>
-            // ?type=large 등 초기 라디오 반영
+            // ?type=large 등 초기 라디오 반영 (필요시 유지)
             const initType = new URLSearchParams(location.search).get('type');
             if (initType) {
                 const r = document.querySelector(
@@ -209,7 +159,8 @@
             const segBtns = document.querySelectorAll('.seg__btn');
             const customerType = document.getElementById('customerType');
             segBtns.forEach((btn) => {
-                btn.addEventListener('click', () => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault(); // 버튼 기본 동작 방지
                     segBtns.forEach((b) => {
                         b.classList.remove('is-active');
                         b.setAttribute('aria-selected', 'false');
@@ -226,6 +177,7 @@
             purposeGrid.addEventListener('click', (e) => {
                 const t = e.target.closest('.pill');
                 if (!t) return;
+                e.preventDefault();
                 purposeGrid
                     .querySelectorAll('.pill')
                     .forEach((p) => p.classList.remove('is-active'));
@@ -233,15 +185,18 @@
                 purposeInput.value = t.dataset.value;
             });
 
-            // 제출 → result.html 로 파라미터 전달
-            document
-                .getElementById('quoteForm')
-                .addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const data = new FormData(e.target);
-                    const qs = new URLSearchParams(data).toString();
-                    location.href = `./result.html?${qs}`;
-                });
+            // ✅ date.html로 이동 (선택값을 쿼리스트링으로 전달)
+            document.getElementById('goDate').addEventListener('click', () => {
+                const qs = new URLSearchParams({
+                    customerType: document.getElementById('customerType').value,
+                    purpose: document.getElementById('purpose').value,
+                }).toString();
+
+                // 같은 폴더(quote/) 내 date.html로 이동
+                location.href = `./date.html?${qs}`;
+            });
+
+            // ⛔️ 폼이 없으므로 이전의 quoteForm submit 핸들러는 제거했습니다.
         </script>
     </body>
 </html>

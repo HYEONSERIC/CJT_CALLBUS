@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>날짜/출발지 선택 | CALLBUS</title>
+
+        <!-- 전역 CSS 유지 -->
+        <link rel="stylesheet" href="../assets/css/base.css" />
+        <link rel="stylesheet" href="../assets/css/components.css" />
+
+        <!-- 이 페이지 전용 스타일 -->
+        <style>
+            .date-full {
+                --gap: 14px;
+                --radius: 12px;
+                --text: #1f2937;
+                --muted: #6b7280;
+                --border: #e5e7eb;
+                --primary: #3b82f6;
+                --shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+                min-height: 100svh;
+                /* ✅ 전체 노란 배경 */
+                background: linear-gradient(180deg, #f8d348 0%, #f3b432 100%);
+            }
+
+            .wrap {
+                max-width: 680px;
+                margin: 36px auto 80px;
+                padding: 0 20px;
+            }
+
+            .card {
+                background: transparent;
+                border: 0;
+                box-shadow: none;
+                border-radius: 0;
+                padding: 0;
+            }
+
+            .summary {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-bottom: 10px;
+            }
+            .chip {
+                background: #f3f4f6;
+                border: 1px solid #e5e7eb;
+                color: #374151;
+                border-radius: 999px;
+                padding: 6px 10px;
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+            .field {
+                margin-top: var(--gap);
+            }
+            .label {
+                display: block;
+                font-weight: 700;
+                margin-bottom: 6px;
+                color: var(--text);
+                margin: 0 auto 6px; /* 가운데 정렬 */
+                width: fit-content;
+            }
+            /* 입력창 살짝 컴팩트 */
+            .input {
+                width: 40%;
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 10px 14px;
+                font-size: 15px;
+                /* 중간으로 정렬*/
+                display: block;
+                margin: 0 auto;
+                color: var(--text);
+
+                outline: none;
+                background: #fff;
+                transition: border-color 0.15s ease, box-shadow 0.15s ease;
+            }
+            .input::placeholder {
+                color: var(--muted);
+            }
+            .input:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+            }
+
+            /* ✅ 버튼/링크 중앙 정렬(세로 스택) */
+            .actions {
+                margin-top: 18px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+            /* ✅ 흰색 pill 버튼(이전 페이지 톤과 맞춤) */
+            .btn-primary {
+                appearance: none;
+                border: 1px solid rgba(0, 0, 0, 0.06);
+                border-radius: 14px;
+                padding: 12px 18px;
+                font-weight: 800;
+                font-size: 15px;
+                color: #111827;
+                background: #fff;
+                cursor: pointer;
+                min-width: 210px;
+                text-align: center;
+                box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+                transition: transform 0.06s ease, filter 0.06s ease;
+            }
+            .btn-primary:active {
+                transform: translateY(1px);
+                filter: brightness(0.98);
+            }
+
+            .home-link {
+                display: inline-block;
+                color: #4f46e5; /* 보라색 링크 톤 */
+                text-decoration: underline;
+                font-size: 14px;
+            }
+            #summary {
+                display: none !important;
+            }
+        </style>
+    </head>
+
+    <body class="date-full">
+        <main class="wrap">
+            <!-- 선택 요약 (URL 파라미터에서 읽어 표시) -->
+            <div id="summary" class="summary" aria-live="polite" hidden></div>
+
+            <form id="whenWhereForm" class="card" novalidate>
+                <div class="field">
+                    <label class="label" for="depart">출발지</label>
+                    <input
+                        id="depart"
+                        name="depart"
+                        class="input"
+                        type="text"
+                        placeholder="예: 서울역"
+                        required
+                    />
+                </div>
+
+                <div class="field">
+                    <label class="label" for="arrive">도착지</label>
+                    <input
+                        id="arrive"
+                        name="arrive"
+                        class="input"
+                        type="text"
+                        placeholder="예: 인천공항"
+                        required
+                    />
+                </div>
+
+                <div class="field">
+                    <label class="label" for="datetime">날짜/시간</label>
+                    <input
+                        id="datetime"
+                        name="date"
+                        class="input"
+                        type="datetime-local"
+                        required
+                    />
+                </div>
+
+                <div class="field">
+                    <label class="label" for="people">인원</label>
+                    <input
+                        id="people"
+                        name="people"
+                        class="input"
+                        type="number"
+                        min="1"
+                        max="100"
+                        inputmode="numeric"
+                        value="20"
+                        required
+                    />
+                </div>
+
+                <div class="actions">
+                    <button class="btn-primary" type="submit">
+                        가격비교 보기
+                    </button>
+                    <a class="home-link" href="../index.html">← 홈으로</a>
+                </div>
+            </form>
+        </main>
+
+        <script>
+            // URL에서 quoteId, customerType, purpose 읽기
+            const params = new URLSearchParams(location.search);
+            const quoteId = params.get('quoteId');
+            const customerType = params.get('customerType');
+            const purpose = params.get('purpose');
+
+            // 상단 선택 요약 배지 표시
+            (function showSummary() {
+                const box = document.getElementById('summary');
+                const chips = [];
+                if (customerType)
+                    chips.push(
+                        `<span class="chip">고객: ${customerType}</span>`
+                    );
+                if (purpose)
+                    chips.push(`<span class="chip">목적: ${purpose}</span>`);
+                if (chips.length) {
+                    box.innerHTML = chips.join('');
+                    box.hidden = false;
+                }
+            })();
+
+            // 간단 검증 헬퍼
+            function invalid(msg, el) {
+                alert(msg);
+                el?.focus();
+                throw new Error(msg);
+            }
+
+            // 제출 → 백엔드 저장 후 다음 페이지 이동
+            document
+                .getElementById('whenWhereForm')
+                .addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    if (!quoteId)
+                        invalid(
+                            '요청 ID(quoteId)를 찾을 수 없어요. 처음 단계부터 다시 시도해주세요.'
+                        );
+
+                    const form = e.target;
+                    const depart = form.depart.value.trim();
+                    const arrive = form.arrive.value.trim();
+                    const date = form.date.value; // YYYY-MM-DDTHH:mm
+                    const people = form.people.value;
+
+                    if (!depart) invalid('출발지를 입력해주세요.', form.depart);
+                    if (!arrive) invalid('도착지를 입력해주세요.', form.arrive);
+                    if (!date) invalid('날짜/시간을 선택해주세요.', form.date);
+                    if (!people || Number(people) < 1)
+                        invalid('인원을 1명 이상 입력해주세요.', form.people);
+
+                    try {
+                        const res = await fetch(
+                            `http://127.0.0.1:8000/api/quotes/${encodeURIComponent(
+                                quoteId
+                            )}/when-where`,
+                            {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    date,
+                                    depart,
+                                    arrive,
+                                    people: Number(people),
+                                }),
+                            }
+                        );
+                        if (!res.ok) throw new Error('save failed');
+                    } catch (err) {
+                        console.error(err);
+                        alert(
+                            '저장 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.'
+                        );
+                        return;
+                    }
+
+                    location.href = `./result.html?quoteId=${encodeURIComponent(
+                        quoteId
+                    )}`;
+                });
+        </script>
+    </body>
+</html>
